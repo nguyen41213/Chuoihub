@@ -104,6 +104,7 @@ title.Text = "Menu"
 title.BackgroundTransparency = 1
 title.TextColor3 = Color3.new(0, 0, 0)
 title.TextSize = 18
+
 --------------------------------------------------
 -- BUTTON FUNCTION
 --------------------------------------------------
