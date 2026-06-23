@@ -4,40 +4,20 @@ local UIS = game:GetService("UserInputService")
 local Player = Players.LocalPlayer
 
 --------------------------------------------------
--- COLOR
---------------------------------------------------
-
-local MENU_COLOR =
-Color3.fromRGB(
-255,
-255,
-255
-)
-
-local BORDER =
-Color3.fromRGB(
-170,
-220,
-255
-)
-
---------------------------------------------------
 -- GUI
 --------------------------------------------------
 
-local gui =
-Instance.new("ScreenGui")
+local gui=Instance.new("ScreenGui")
+gui.Name="BananaHub"
+gui.Parent=Player:WaitForChild("PlayerGui")
+gui.ResetOnSpawn=false
 
-gui.Name =
-"UtilityMenu"
+--------------------------------------------------
+-- COLOR
+--------------------------------------------------
 
-gui.Parent =
-Player:WaitForChild(
-"PlayerGui"
-)
-
-gui.ResetOnSpawn =
-false
+local MENU=Color3.fromRGB(255,255,255)
+local BORDER=Color3.fromRGB(255,236,150)
 
 --------------------------------------------------
 -- DRAG
@@ -45,220 +25,146 @@ false
 
 local function drag(obj)
 
-local holding=false
-local start
-local pos
+	local hold=false
+	local start
+	local pos
 
-obj.InputBegan:Connect(function(i)
+	obj.InputBegan:Connect(function(i)
 
-if i.UserInputType==
-Enum.UserInputType.Touch
-or
-i.UserInputType==
-Enum.UserInputType.MouseButton1 then
+		if i.UserInputType==Enum.UserInputType.MouseButton1
+		or i.UserInputType==Enum.UserInputType.Touch then
 
-holding=true
-start=i.Position
-pos=obj.Position
+			hold=true
+			start=i.Position
+			pos=obj.Position
 
-end
+		end
 
-end)
+	end)
 
-obj.InputEnded:Connect(function()
+	obj.InputEnded:Connect(function()
 
-holding=false
+		hold=false
 
-end)
+	end)
 
-UIS.InputChanged:Connect(function(i)
+	UIS.InputChanged:Connect(function(i)
 
-if holding and (
-i.UserInputType==
-Enum.UserInputType.Touch
-or
-i.UserInputType==
-Enum.UserInputType.MouseMovement
-) then
+		if hold and (
+			i.UserInputType==Enum.UserInputType.MouseMovement
+			or i.UserInputType==Enum.UserInputType.Touch
+		) then
 
-local d=
-i.Position-start
+			local d=i.Position-start
 
-obj.Position=
-UDim2.new(
-pos.X.Scale,
-pos.X.Offset+d.X,
-pos.Y.Scale,
-pos.Y.Offset+d.Y
-)
+			obj.Position=
+			UDim2.new(
+				pos.X.Scale,
+				pos.X.Offset+d.X,
+				pos.Y.Scale,
+				pos.Y.Offset+d.Y
+			)
+
+		end
+
+	end)
 
 end
-
-end)
-
-end
-
---------------------------------------------------
--- NÚT MỞ MENU
---------------------------------------------------
-
-local menu=
-Instance.new(
-"TextButton"
-)
-
-menu.Parent=
-gui
-
-menu.Size=
-UDim2.new(
-0,
-50,
-0,
-50
-)
-
-menu.Position=
-UDim2.new(
-0,
-20,
-.5,
--25
-)
-
-menu.Text=""
-
-menu.BackgroundColor3=
-MENU_COLOR
-
-menu.BackgroundTransparency=
-0.5
-
-local menuCorner=
-Instance.new(
-"UICorner"
-)
-
-menuCorner.Parent=
-menu
-
-menuCorner.CornerRadius=
-UDim.new(
-0,
-10
-)
-
-drag(menu)
 
 --------------------------------------------------
 -- FRAME
 --------------------------------------------------
 
-local frame=
-Instance.new(
-"Frame"
-)
+local frame=Instance.new("Frame")
 
-frame.Parent=
-gui
+frame.Parent=gui
+frame.Size=UDim2.new(0,266,0,364)
+frame.Position=UDim2.new(.5,-133,.5,-182)
 
-frame.Size=
-UDim2.new(
-0,
-260,
-0,
-350
-)
+frame.BackgroundColor3=MENU
+frame.BackgroundTransparency=.5
 
-frame.Position=
-UDim2.new(
-.5,
--130,
-.5,
--175
-)
-
-frame.Visible=
-false
-
-frame.BackgroundColor3=
-MENU_COLOR
-
-frame.BackgroundTransparency=
-0.5
-
-local frameCorner=
-Instance.new(
-"UICorner"
-)
-
-frameCorner.Parent=
-frame
-
-frameCorner.CornerRadius=
-UDim.new(
-0,
-18
-)
+Instance.new("UICorner",frame).CornerRadius=
+UDim.new(0,24)
 
 local stroke=
-Instance.new(
-"UIStroke"
-)
+Instance.new("UIStroke")
 
-stroke.Parent=
-frame
-
-stroke.Color=
-BORDER
-
-stroke.Thickness=
-3
+stroke.Parent=frame
+stroke.Color=BORDER
+stroke.Thickness=3
 
 drag(frame)
-
-menu.MouseButton1Click:Connect(function()
-
-frame.Visible=
-not frame.Visible
-
-end)
 
 --------------------------------------------------
 -- TITLE
 --------------------------------------------------
 
 local title=
-Instance.new(
-"TextLabel"
-)
+Instance.new("TextLabel")
 
-title.Parent=
-frame
+title.Parent=frame
+title.Size=UDim2.new(1,0,0,40)
+title.Position=UDim2.new(0,0,0,5)
 
-title.Size=
+title.BackgroundTransparency=1
+title.Text="🍌 Banana Hub"
+
+title.TextScaled=true
+title.Font=Enum.Font.GothamBold
+title.TextColor3=Color3.new()
+
+--------------------------------------------------
+-- CREDIT
+--------------------------------------------------
+
+local credit=
+Instance.new("TextLabel")
+
+credit.Parent=frame
+
+credit.Size=
 UDim2.new(
 1,
 0,
 0,
-40
+20
 )
 
-title.Text=
-"Menu"
+credit.Position=
+UDim2.new(
+0,
+0,
+1,
+-26
+)
 
-title.BackgroundTransparency=
-1
+credit.BackgroundTransparency=1
 
-title.TextColor3=
-Color3.new(
+credit.Text=
+"By n_g_u_y_e_n"
+
+credit.TextColor3=
+Color3.fromRGB(
+150,
+220,
+255
+)
+
+credit.TextSize=13
+
+credit.Font=
+Enum.Font.GothamBold
+
+credit.TextStrokeColor3=
+Color3.fromRGB(
 0,
 0,
 0
 )
 
-title.TextSize=
-18
+credit.TextStrokeTransparency=
+0.65
 
 --------------------------------------------------
 -- BUTTON
@@ -266,60 +172,50 @@ title.TextSize=
 
 local function make(text,y)
 
-local b=
-Instance.new(
-"TextButton"
-)
+	local b=
+	Instance.new(
+	"TextButton"
+	)
 
-b.Parent=
-frame
+	b.Parent=frame
 
-b.Size=
-UDim2.new(
-.8,
-0,
-0,
-35
-)
+	b.Size=
+	UDim2.new(
+	0.8,
+	0,
+	0,
+	35
+	)
 
-b.Position=
-UDim2.new(
-.1,
-0,
-0,
-y
-)
+	b.Position=
+	UDim2.new(
+	0.1,
+	0,
+	0,
+	y
+	)
 
-b.Text=text
+	b.Text=text
 
-b.BackgroundColor3=
-MENU_COLOR
+	b.BackgroundColor3=
+	Color3.fromRGB(
+	240,
+	240,
+	240
+	)
 
-b.BackgroundTransparency=
-0.5
+	b.BackgroundTransparency=.25
 
-b.TextColor3=
-Color3.new(
-0,
-0,
-0
-)
+	Instance.new(
+	"UICorner",
+	b
+	).CornerRadius=
+	UDim.new(
+	0,
+	12
+	)
 
-local c=
-Instance.new(
-"UICorner"
-)
-
-c.Parent=
-b
-
-c.CornerRadius=
-UDim.new(
-0,
-10
-)
-
-return b
+	return b
 
 end
 
@@ -332,125 +228,119 @@ local ESP=false
 local esp=
 make(
 "ESP : OFF",
-50
+75
 )
 
 local function updateESP()
 
-for _,p in ipairs(
-Players:GetPlayers()
-) do
+	for _,p in ipairs(
+	Players:GetPlayers()
+	) do
 
-if p~=Player
-and p.Character then
+		if p~=Player and p.Character then
 
-local old=
-p.Character:
-FindFirstChild(
-"DevDebug"
-)
+			local old=
+			p.Character:FindFirstChild(
+			"BananaESP"
+			)
 
-if old then
-old:Destroy()
-end
+			if old then
+				old:Destroy()
+			end
 
-if ESP then
+			if ESP then
 
-local h=
-Instance.new(
-"Highlight"
-)
+				local h=
+				Instance.new(
+				"Highlight"
+				)
 
-h.Name=
-"DevDebug"
+				h.Name=
+				"BananaESP"
 
-h.FillColor=
-Color3.fromRGB(
-0,
-255,
-120
-)
+				h.FillColor=
+				Color3.fromRGB(
+				0,
+				255,
+				120
+				)
 
-h.FillTransparency=
-0.8
+				h.FillTransparency=.7
 
-h.DepthMode=
-Enum.HighlightDepthMode
-.AlwaysOnTop
+				h.OutlineColor=
+				Color3.fromRGB(
+				0,
+				255,
+				120
+				)
 
-h.Parent=
-p.Character
+				h.Parent=
+				p.Character
 
-end
+			end
 
-end
+		end
 
-end
+	end
 
 end
 
 esp.MouseButton1Click:Connect(function()
 
-ESP=
-not ESP
+	ESP=not ESP
 
-esp.Text=
-ESP and
-"ESP : ON"
-or
-"ESP : OFF"
+	esp.Text=
+	ESP
+	and "ESP : ON"
+	or "ESP : OFF"
 
-updateESP()
+	updateESP()
 
 end)
 
 --------------------------------------------------
--- INFINITE JUMP
+-- JUMP
 --------------------------------------------------
 
 local inf=false
 
 local jump=
 make(
-"Infinite Jump : OFF",
-95
+"Jump : OFF",
+120
 )
 
 jump.MouseButton1Click:Connect(function()
 
-inf=
-not inf
+	inf=not inf
 
-jump.Text=
-inf and
-"Infinite Jump : ON"
-or
-"Infinite Jump : OFF"
+	jump.Text=
+	inf
+	and "Jump : ON"
+	or "Jump : OFF"
 
 end)
 
 UIS.JumpRequest:Connect(function()
 
-if inf then
+	if inf then
 
-local h=
-Player.Character
-and
-Player.Character:
-FindFirstChildOfClass(
-"Humanoid"
-)
+		local h=
+		Player.Character
+		and
+		Player.Character:FindFirstChildOfClass(
+		"Humanoid"
+		)
 
-if h then
+		if h then
 
-h:ChangeState(
-Enum.HumanoidStateType
-.Jumping
-)
+			h:ChangeState(
+			Enum.HumanoidStateType.Jumping
+			)
 
-end
+		end
 
-end
+	end
 
 end)
 
@@ -459,66 +349,60 @@ end)
 --------------------------------------------------
 
 local speed=16
-local enabled=false
+local speedOn=false
 
 local speedBtn=
 make(
 "Speed : OFF",
-140
+165
 )
 
-local function updateSpeed()
+local function applySpeed()
 
-local h=
-Player.Character
-and
-Player.Character:
-FindFirstChildOfClass(
-"Humanoid"
-)
+	local h=
+	Player.Character
+	and
+	Player.Character:FindFirstChildOfClass(
+	"Humanoid"
+	)
 
-if h then
+	if h then
 
-h.WalkSpeed=
-enabled
-and
-speed
-or
-16
+		h.WalkSpeed=
+		speedOn
+		and speed
+		or 16
 
-end
+	end
 
 end
 
 speedBtn.MouseButton1Click:Connect(function()
 
-enabled=
-not enabled
+	speedOn=
+	not speedOn
 
-speedBtn.Text=
-enabled
-and
-"Speed : ON"
-or
-"Speed : OFF"
+	speedBtn.Text=
+	speedOn
+	and "Speed : ON"
+	or "Speed : OFF"
 
-updateSpeed()
+	applySpeed()
 
 end)
 
 --------------------------------------------------
--- VALUE
+-- SPEED BOX
 --------------------------------------------------
 
-local value=
+local box=
 Instance.new(
 "TextBox"
 )
 
-value.Parent=
-frame
+box.Parent=frame
 
-value.Size=
+box.Size=
 UDim2.new(
 .8,
 0,
@@ -526,133 +410,169 @@ UDim2.new(
 35
 )
 
-value.Position=
+box.Position=
 UDim2.new(
 .1,
 0,
 0,
-190
+210
 )
 
-value.Text="16"
+box.Text="16"
 
-value.BackgroundColor3=
-MENU_COLOR
-
-value.BackgroundTransparency=
-0.5
-
-local box=
 Instance.new(
-"UICorner"
+"UICorner",
+box
 )
 
-box.Parent=
-value
+box.FocusLost:Connect(function()
 
-box.CornerRadius=
-UDim.new(
-0,
-10
-)
+	local n=
+	tonumber(
+	box.Text
+	)
 
-value.FocusLost:Connect(function()
+	if n then
 
-local n=
-tonumber(
-value.Text
-)
+		speed=n
 
-if n then
+		applySpeed()
 
-speed=
-math.max(
-0,
-n
-)
-
-updateSpeed()
-
-end
+	end
 
 end)
 
 --------------------------------------------------
--- +
+-- + -
 --------------------------------------------------
 
 local plus=
-make(
-"+",
-240
-)
+make("+",260)
 
 plus.Size=
-UDim2.new(
-.35,
-0,
-0,
-35
-)
+UDim2.new(.35,0,0,35)
 
 plus.MouseButton1Click:Connect(function()
 
-speed+=5
-
-value.Text=
-speed
-
-updateSpeed()
+	speed+=5
+	box.Text=speed
+	applySpeed()
 
 end)
 
---------------------------------------------------
--- -
---------------------------------------------------
-
 local minus=
-make(
-"-",
-240
-)
-
-minus.Position=
-UDim2.new(
-.55,
-0,
-0,
-240
-)
+make("-",260)
 
 minus.Size=
-UDim2.new(
-.35,
-0,
-0,
-35
-)
+UDim2.new(.35,0,0,35)
+
+minus.Position=
+UDim2.new(.55,0,0,260)
 
 minus.MouseButton1Click:Connect(function()
 
-speed=
-math.max(
-0,
-speed-5
-)
+	speed=
+	math.max(
+	0,
+	speed-5
+	)
 
-value.Text=
-speed
+	box.Text=speed
 
-updateSpeed()
+	applySpeed()
 
 end)
 
+--------------------------------------------------
+-- MENU BUTTON
+--------------------------------------------------
+
+local menu=
+Instance.new(
+"TextButton"
+)
+
+menu.Parent=gui
+
+menu.Size=
+UDim2.new(
+0,
+60,
+0,
+60
+)
+
+menu.Position=
+UDim2.new(
+0,
+20,
+.5,
+-30
+)
+
+menu.BackgroundColor3=
+Color3.fromRGB(
+255,
+255,
+255
+)
+
+menu.BackgroundTransparency=.15
+
+menu.Text="🍌"
+
+menu.TextScaled=true
+
+menu.Font=
+Enum.Font.GothamBold
+
+menu.TextColor3=
+Color3.new()
+
+Instance.new(
+"UICorner",
+menu
+).CornerRadius=
+UDim.new(
+0,
+16
+)
+
+local ms=
+Instance.new(
+"UIStroke"
+)
+
+ms.Parent=menu
+
+ms.Color=
+Color3.fromRGB(
+57,
+255,
+20
+)
+
+ms.Thickness=4
+
+drag(menu)
+
+menu.MouseButton1Click:Connect(function()
+
+	frame.Visible=
+	not frame.Visible
+
+end)
+
+--------------------------------------------------
+-- RESPAWN
+--------------------------------------------------
+
 Player.CharacterAdded:Connect(function()
 
-task.wait(1)
+	task.wait(1)
 
-updateSpeed()
+	applySpeed()
 
-updateESP()
+	updateESP()
 
 end)
