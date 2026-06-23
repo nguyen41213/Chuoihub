@@ -4,14 +4,21 @@ local UIS = game:GetService("UserInputService")
 local Player = Players.LocalPlayer
 
 --------------------------------------------------
--- COLOR (MÀU GIỐNG ẢNH)
+-- COLOR
 --------------------------------------------------
 
 local MENU_COLOR =
 Color3.fromRGB(
-136,
-219,
-131
+255,
+255,
+255
+)
+
+local BORDER =
+Color3.fromRGB(
+170,
+220,
+255
 )
 
 --------------------------------------------------
@@ -20,6 +27,9 @@ Color3.fromRGB(
 
 local gui =
 Instance.new("ScreenGui")
+
+gui.Name =
+"UtilityMenu"
 
 gui.Parent =
 Player:WaitForChild(
@@ -48,12 +58,8 @@ i.UserInputType==
 Enum.UserInputType.MouseButton1 then
 
 holding=true
-
-start=
-i.Position
-
-pos=
-obj.Position
+start=i.Position
+pos=obj.Position
 
 end
 
@@ -67,20 +73,23 @@ end)
 
 UIS.InputChanged:Connect(function(i)
 
-if holding then
+if holding and (
+i.UserInputType==
+Enum.UserInputType.Touch
+or
+i.UserInputType==
+Enum.UserInputType.MouseMovement
+) then
 
 local d=
 i.Position-start
 
 obj.Position=
 UDim2.new(
-
 pos.X.Scale,
 pos.X.Offset+d.X,
-
 pos.Y.Scale,
 pos.Y.Offset+d.Y
-
 )
 
 end
@@ -90,54 +99,53 @@ end)
 end
 
 --------------------------------------------------
--- MENU IMAGE BUTTON
+-- NÚT MỞ MENU
 --------------------------------------------------
 
-local menu =
+local menu=
 Instance.new(
-"ImageButton"
+"TextButton"
 )
 
-menu.Parent =
+menu.Parent=
 gui
 
-menu.Size =
+menu.Size=
 UDim2.new(
 0,
-80,
+50,
 0,
-80
+50
 )
 
-menu.Position =
+menu.Position=
 UDim2.new(
 0,
 20,
-0.5,
--40
+.5,
+-25
 )
 
-menu.Image =
-"rbxassetid://138132473369776"
+menu.Text=""
 
-menu.BackgroundTransparency =
-1
+menu.BackgroundColor3=
+MENU_COLOR
 
-menu.ScaleType =
-Enum.ScaleType.Fit
+menu.BackgroundTransparency=
+0.5
 
-local corner =
+local menuCorner=
 Instance.new(
 "UICorner"
 )
 
-corner.Parent =
+menuCorner.Parent=
 menu
 
-corner.CornerRadius =
+menuCorner.CornerRadius=
 UDim.new(
 0,
-18
+10
 )
 
 drag(menu)
@@ -177,7 +185,35 @@ frame.BackgroundColor3=
 MENU_COLOR
 
 frame.BackgroundTransparency=
-0.8
+0.5
+
+local frameCorner=
+Instance.new(
+"UICorner"
+)
+
+frameCorner.Parent=
+frame
+
+frameCorner.CornerRadius=
+UDim.new(
+0,
+18
+)
+
+local stroke=
+Instance.new(
+"UIStroke"
+)
+
+stroke.Parent=
+frame
+
+stroke.Color=
+BORDER
+
+stroke.Thickness=
+3
 
 drag(frame)
 
@@ -211,8 +247,8 @@ UDim2.new(
 title.Text=
 "Menu"
 
-title.TextSize=
-18
+title.BackgroundTransparency=
+1
 
 title.TextColor3=
 Color3.new(
@@ -221,11 +257,11 @@ Color3.new(
 0
 )
 
-title.BackgroundTransparency=
-1
+title.TextSize=
+18
 
 --------------------------------------------------
--- CREATE BUTTON
+-- BUTTON
 --------------------------------------------------
 
 local function make(text,y)
@@ -256,20 +292,31 @@ y
 
 b.Text=text
 
-b.TextSize=
-15
-
 b.BackgroundColor3=
 MENU_COLOR
 
 b.BackgroundTransparency=
-0.35
+0.5
 
 b.TextColor3=
 Color3.new(
 0,
 0,
 0
+)
+
+local c=
+Instance.new(
+"UICorner"
+)
+
+c.Parent=
+b
+
+c.CornerRadius=
+UDim.new(
+0,
+10
 )
 
 return b
@@ -318,10 +365,10 @@ h.Name=
 "DevDebug"
 
 h.FillColor=
-Color3.new(
+Color3.fromRGB(
 0,
-1,
-0
+255,
+120
 )
 
 h.FillTransparency=
@@ -348,8 +395,7 @@ ESP=
 not ESP
 
 esp.Text=
-ESP
-and
+ESP and
 "ESP : ON"
 or
 "ESP : OFF"
@@ -376,8 +422,7 @@ inf=
 not inf
 
 jump.Text=
-inf
-and
+inf and
 "Infinite Jump : ON"
 or
 "Infinite Jump : OFF"
@@ -489,27 +534,27 @@ UDim2.new(
 190
 )
 
-value.Text=
-"16"
-
-value.TextSize=
-15
-
-value.TextColor3=
-Color3.new(
-0,
-0,
-0
-)
+value.Text="16"
 
 value.BackgroundColor3=
 MENU_COLOR
 
 value.BackgroundTransparency=
-0.35
+0.5
 
-value.PlaceholderText=
-"Speed Value"
+local box=
+Instance.new(
+"UICorner"
+)
+
+box.Parent=
+value
+
+box.CornerRadius=
+UDim.new(
+0,
+10
+)
 
 value.FocusLost:Connect(function()
 
@@ -522,23 +567,11 @@ if n then
 
 speed=
 math.max(
-n,
-0
-)
-
-value.Text=
-tostring(
-speed
+0,
+n
 )
 
 updateSpeed()
-
-else
-
-value.Text=
-tostring(
-speed
-)
 
 end
 
@@ -564,8 +597,7 @@ UDim2.new(
 
 plus.MouseButton1Click:Connect(function()
 
-speed=
-speed+5
+speed+=5
 
 value.Text=
 speed
@@ -604,8 +636,8 @@ minus.MouseButton1Click:Connect(function()
 
 speed=
 math.max(
-speed-5,
-0
+0,
+speed-5
 )
 
 value.Text=
