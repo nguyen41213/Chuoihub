@@ -248,3 +248,147 @@ Player.CharacterAdded:Connect(function()
     updateSpeed()
     updateESP()
 end)
+
+--------------------------------------------------
+-- NÚT BẬT/TẮT 🍌 (KÉO ĐƯỢC)
+--------------------------------------------------
+
+local menu =
+Instance.new(
+"TextButton"
+)
+
+menu.Parent =
+gui
+
+menu.Size =
+UDim2.new(
+0,
+60,
+0,
+60
+)
+
+menu.Position =
+UDim2.new(
+0,
+20,
+0.5,
+-30
+)
+
+menu.BackgroundColor3 =
+Color3.fromRGB(
+255,
+255,
+255
+)
+
+menu.BackgroundTransparency =
+0.15
+
+menu.Text = "🍌"
+
+menu.TextScaled = true
+
+menu.Font =
+Enum.Font.GothamBold
+
+menu.TextColor3 =
+Color3.new()
+
+local mc =
+Instance.new(
+"UICorner"
+)
+
+mc.Parent =
+menu
+
+mc.CornerRadius =
+UDim.new(
+0,
+16
+)
+
+-- VIỀN XANH NEON
+
+local ms =
+Instance.new(
+"UIStroke"
+)
+
+ms.Parent =
+menu
+
+ms.Color =
+Color3.fromRGB(
+57,
+255,
+20
+)
+
+ms.Thickness = 3
+
+ms.ApplyStrokeMode =
+Enum.ApplyStrokeMode.Border
+
+--------------------------------------------------
+-- KÉO ĐƯỢC
+--------------------------------------------------
+
+drag(menu)
+
+--------------------------------------------------
+-- NHẤN ĐỂ ẨN/HIỆN MENU
+--------------------------------------------------
+
+local moved = false
+local startPos
+
+menu.InputBegan:Connect(function(i)
+
+	if i.UserInputType ==
+	Enum.UserInputType.MouseButton1
+	or
+	i.UserInputType ==
+	Enum.UserInputType.Touch then
+
+		moved = false
+		startPos = i.Position
+
+	end
+
+end)
+
+menu.InputChanged:Connect(function(i)
+
+	if startPos then
+
+		local d =
+		(i.Position-startPos).Magnitude
+
+		if d > 8 then
+			moved = true
+		end
+
+	end
+
+end)
+
+menu.MouseButton1Click:Connect(function()
+
+	if moved then
+		return
+	end
+
+	frame.Visible =
+	not frame.Visible
+
+end)
+
+--------------------------------------------------
+-- MENU CHÍNH CŨNG KÉO ĐƯỢC
+--------------------------------------------------
+
+drag(frame)
