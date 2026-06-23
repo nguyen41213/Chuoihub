@@ -49,51 +49,6 @@ local function drag(obj)
 end
 
 --------------------------------------------------
--- NÚT MỞ MENU (ImageButton)
---------------------------------------------------
-
-local menu = Instance.new("ImageButton")
-menu.Parent = gui
-menu.Size = UDim2.new(0, 50, 0, 50)
-menu.Position = UDim2.new(0, 20, 0.5, -25)
-menu.Image = "rbxassetid://138132473369776"
-menu.BackgroundTransparency = 1
-menu.ScaleType = Enum.ScaleType.Fit
-
-local menuCorner = Instance.new("UICorner")
-menuCorner.Parent = menu
-menuCorner.CornerRadius = UDim.new(0, 10)
-
-drag(menu)
-
---------------------------------------------------
--- FRAME
---------------------------------------------------
-
-local frame = Instance.new("Frame")
-frame.Parent = gui
-frame.Size = UDim2.new(0, 260, 0, 350)
-frame.Position = UDim2.new(0.5, -130, 0.5, -175)
-frame.Visible = false
-frame.BackgroundColor3 = MENU_COLOR
-frame.BackgroundTransparency = 0.5
-
-local frameCorner = Instance.new("UICorner")
-frameCorner.Parent = frame
-frameCorner.CornerRadius = UDim.new(0, 18)
-
-local stroke = Instance.new("UIStroke")
-stroke.Parent = frame
-stroke.Color = BORDER
-stroke.Thickness = 3
-
-drag(frame)
-
-menu.MouseButton1Click:Connect(function()
-    frame.Visible = not frame.Visible
-end)
-
---------------------------------------------------
 -- TITLE
 --------------------------------------------------
 
@@ -143,7 +98,39 @@ local function updateESP()
                 local h = Instance.new("Highlight")
                 h.Name = "DevDebug"
                 h.FillColor = Color3.fromRGB(0, 255, 120)
-                h.FillTransparency = 0.8
+                h--------------------------------------------------
+-- NÚT MỞ MENU (ẢNH CỦA BẠN)
+--------------------------------------------------
+
+local menu = Instance.new("ImageButton")
+
+menu.Parent = gui
+
+menu.Size = UDim2.new(0,70,0,70)
+
+menu.Position = UDim2.new(0,20,0.5,-35)
+
+menu.BackgroundTransparency = 1
+
+menu.Image = "rbxasset://textures/ui/GuiImagePlaceholder.png"
+
+local img = Instance.new("ImageLabel")
+
+img.Parent = menu
+
+img.Size = UDim2.new(1,0,1,0)
+
+img.BackgroundTransparency = 1
+
+img.Image = "rbxassetid://138132473369776"
+
+local corner = Instance.new("UICorner")
+
+corner.Parent = menu
+
+corner.CornerRadius = UDim.new(1,0)
+
+drag(menu).FillTransparency = 0.8
                 h.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
                 h.Parent = p.Character
             end
