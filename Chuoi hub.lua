@@ -78,21 +78,21 @@ end
 local frame=Instance.new("Frame")
 
 frame.Parent=gui
-frame.Size=UDim2.new(0,266,0,364)
-frame.Position=UDim2.new(.5,-133,.5,-182)
+frame.Size=UDim2.new(0,186,0,255)
+frame.Position=UDim2.new(.5,-93,.5,-127)
 
 frame.BackgroundColor3=MENU
 frame.BackgroundTransparency=.5
 
 Instance.new("UICorner",frame).CornerRadius=
-UDim.new(0,24)
+UDim.new(0,18)
 
 local stroke=
 Instance.new("UIStroke")
 
 stroke.Parent=frame
 stroke.Color=BORDER
-stroke.Thickness=3
+stroke.Thickness=2
 
 drag(frame)
 
@@ -104,15 +104,21 @@ local title=
 Instance.new("TextLabel")
 
 title.Parent=frame
-title.Size=UDim2.new(1,0,0,40)
+title.Size=UDim2.new(1,0,0,26)
+
 title.Position=UDim2.new(0,0,0,5)
 
 title.BackgroundTransparency=1
+
 title.Text="🍌 Banana Hub"
 
-title.TextScaled=true
-title.Font=Enum.Font.GothamBold
-title.TextColor3=Color3.new()
+title.TextSize=18
+
+title.Font=
+Enum.Font.GothamBold
+
+title.TextColor3=
+Color3.new()
 
 --------------------------------------------------
 -- CREDIT
@@ -124,25 +130,14 @@ Instance.new("TextLabel")
 credit.Parent=frame
 
 credit.Size=
-UDim2.new(
-1,
-0,
-0,
-20
-)
+UDim2.new(1,0,0,16)
 
 credit.Position=
-UDim2.new(
-0,
-0,
-1,
--26
-)
+UDim2.new(0,0,1,-20)
 
 credit.BackgroundTransparency=1
 
-credit.Text=
-"By n_g_u_y_e_n"
+credit.Text="By n_g_u_y_e_n"
 
 credit.TextColor3=
 Color3.fromRGB(
@@ -151,20 +146,10 @@ Color3.fromRGB(
 255
 )
 
-credit.TextSize=13
+credit.TextSize=10
 
 credit.Font=
 Enum.Font.GothamBold
-
-credit.TextStrokeColor3=
-Color3.fromRGB(
-0,
-0,
-0
-)
-
-credit.TextStrokeTransparency=
-0.65
 
 --------------------------------------------------
 -- BUTTON
@@ -181,21 +166,23 @@ local function make(text,y)
 
 	b.Size=
 	UDim2.new(
-	0.8,
+	.8,
 	0,
 	0,
-	35
+	26
 	)
 
 	b.Position=
 	UDim2.new(
-	0.1,
+	.1,
 	0,
 	0,
 	y
 	)
 
 	b.Text=text
+
+	b.TextSize=12
 
 	b.BackgroundColor3=
 	Color3.fromRGB(
@@ -212,7 +199,7 @@ local function make(text,y)
 	).CornerRadius=
 	UDim.new(
 	0,
-	12
+	8
 	)
 
 	return b
@@ -228,7 +215,7 @@ local ESP=false
 local esp=
 make(
 "ESP : OFF",
-75
+50
 )
 
 local function updateESP()
@@ -307,7 +294,7 @@ local inf=false
 local jump=
 make(
 "Jump : OFF",
-120
+82
 )
 
 jump.MouseButton1Click:Connect(function()
@@ -354,7 +341,7 @@ local speedOn=false
 local speedBtn=
 make(
 "Speed : OFF",
-165
+114
 )
 
 local function applySpeed()
@@ -392,7 +379,7 @@ speedBtn.MouseButton1Click:Connect(function()
 end)
 
 --------------------------------------------------
--- SPEED BOX
+-- BOX
 --------------------------------------------------
 
 local box=
@@ -407,7 +394,7 @@ UDim2.new(
 .8,
 0,
 0,
-35
+26
 )
 
 box.Position=
@@ -415,10 +402,12 @@ UDim2.new(
 .1,
 0,
 0,
-210
+146
 )
 
 box.Text="16"
+
+box.TextSize=12
 
 Instance.new(
 "UICorner",
@@ -447,10 +436,10 @@ end)
 --------------------------------------------------
 
 local plus=
-make("+",260)
+make("+",182)
 
 plus.Size=
-UDim2.new(.35,0,0,35)
+UDim2.new(.35,0,0,26)
 
 plus.MouseButton1Click:Connect(function()
 
@@ -461,21 +450,21 @@ plus.MouseButton1Click:Connect(function()
 end)
 
 local minus=
-make("-",260)
+make("-",182)
 
 minus.Size=
-UDim2.new(.35,0,0,35)
+UDim2.new(.35,0,0,26)
 
 minus.Position=
-UDim2.new(.55,0,0,260)
+UDim2.new(.55,0,0,182)
 
 minus.MouseButton1Click:Connect(function()
 
 	speed=
-	math.max(
-	0,
-	speed-5
-	)
+math.max(
+0,
+speed-5
+)
 
 	box.Text=speed
 
@@ -497,9 +486,9 @@ menu.Parent=gui
 menu.Size=
 UDim2.new(
 0,
-60,
+42,
 0,
-60
+42
 )
 
 menu.Position=
@@ -507,7 +496,7 @@ UDim2.new(
 0,
 20,
 .5,
--30
+-21
 )
 
 menu.BackgroundColor3=
@@ -521,7 +510,7 @@ menu.BackgroundTransparency=.15
 
 menu.Text="🍌"
 
-menu.TextScaled=true
+menu.TextSize=18
 
 menu.Font=
 Enum.Font.GothamBold
@@ -535,7 +524,7 @@ menu
 ).CornerRadius=
 UDim.new(
 0,
-16
+12
 )
 
 local ms=
@@ -552,7 +541,7 @@ Color3.fromRGB(
 20
 )
 
-ms.Thickness=4
+ms.Thickness=3
 
 drag(menu)
 
