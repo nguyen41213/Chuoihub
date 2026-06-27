@@ -582,9 +582,9 @@ circle.Parent=gui
 circle.Size=
 UDim2.new(
 0,
-FOV2,
+FOV*2,
 0,
-FOV2
+FOV*2
 )
 
 circle.AnchorPoint=
