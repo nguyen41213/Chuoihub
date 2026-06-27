@@ -807,18 +807,12 @@ ms.Parent=menu
 
 ms.Color=BORDER
 ms.Thickness=3
-
-menu.MouseButton1Click:Connect(function()
-
-frame.Visible=
-not frame.Visible
-
-end)
 --------------------------------------------------
--- DRAG MENU BUTTON 🍌
+-- MENU BUTTON + DRAG 🍌
 --------------------------------------------------
 
 local dragging=false
+local moved=false
 local dragStart
 local startPos
 
@@ -828,6 +822,7 @@ menu.InputBegan:Connect(function(input)
 	or input.UserInputType==Enum.UserInputType.Touch then
 
 		dragging=true
+		moved=false
 		dragStart=input.Position
 		startPos=menu.Position
 
@@ -845,8 +840,11 @@ UIS.InputChanged:Connect(function(input)
 
 		local delta=input.Position-dragStart
 
-		menu.Position=
-		UDim2.new(
+		if delta.Magnitude>8 then
+			moved=true
+		end
+
+		menu.Position=UDim2.new(
 			startPos.X.Scale,
 			startPos.X.Offset+delta.X,
 			startPos.Y.Scale,
@@ -863,6 +861,10 @@ UIS.InputEnded:Connect(function(input)
 	or input.UserInputType==Enum.UserInputType.Touch then
 
 		dragging=false
+
+		if not moved then
+			frame.Visible=not frame.Visible
+		end
 
 	end
 
