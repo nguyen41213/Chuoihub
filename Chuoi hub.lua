@@ -1,339 +1,415 @@
-local Players = game:GetService("Players")
-local UIS = game:GetService("UserInputService")
+local Players=game:GetService("Players")
+local UIS=game:GetService("UserInputService")
+local RunService=game:GetService("RunService")
 
-local Player = Players.LocalPlayer
+local Player=Players.LocalPlayer
+local Camera=workspace.CurrentCamera
 
---------------------------------------------------
+pcall(function()
+local old=
+Player.PlayerGui:
+FindFirstChild(
+"BananaHub"
+)
+
+if old then  
+	old:Destroy()  
+end
+
+end)
+
+
+---
+
 -- GUI
---------------------------------------------------
 
 local gui=Instance.new("ScreenGui")
 gui.Name="BananaHub"
-gui.Parent=Player:WaitForChild("PlayerGui")
+gui.Parent=Player.PlayerGui
 gui.ResetOnSpawn=false
 
---------------------------------------------------
--- COLOR
---------------------------------------------------
-
 local MENU=Color3.fromRGB(255,255,255)
-local BORDER=Color3.fromRGB(255,236,150)
+local BORDER=Color3.fromRGB(57,255,20)
 
---------------------------------------------------
--- DRAG
---------------------------------------------------
 
-local function drag(obj)
+---
 
-	local hold=false
-	local start
-	local pos
-
-	obj.InputBegan:Connect(function(i)
-
-		if i.UserInputType==Enum.UserInputType.MouseButton1
-		or i.UserInputType==Enum.UserInputType.Touch then
-
-			hold=true
-			start=i.Position
-			pos=obj.Position
-
-		end
-
-	end)
-
-	obj.InputEnded:Connect(function()
-
-		hold=false
-
-	end)
-
-	UIS.InputChanged:Connect(function(i)
-
-		if hold and (
-			i.UserInputType==Enum.UserInputType.MouseMovement
-			or i.UserInputType==Enum.UserInputType.Touch
-		) then
-
-			local d=i.Position-start
-
-			obj.Position=
-			UDim2.new(
-				pos.X.Scale,
-				pos.X.Offset+d.X,
-				pos.Y.Scale,
-				pos.Y.Offset+d.Y
-			)
-
-		end
-
-	end)
-
-end
-
---------------------------------------------------
 -- FRAME
---------------------------------------------------
 
 local frame=Instance.new("Frame")
 
 frame.Parent=gui
-frame.Size=UDim2.new(0,186,0,255)
-frame.Position=UDim2.new(.5,-93,.5,-127)
+
+frame.Size=
+UDim2.new(
+0,
+186,
+0,
+255
+)
+
+frame.Position=
+UDim2.new(
+.5,
+-93,
+.5,
+-127
+)
 
 frame.BackgroundColor3=MENU
 frame.BackgroundTransparency=.5
 
-Instance.new("UICorner",frame).CornerRadius=
-UDim.new(0,18)
+Instance.new(
+"UICorner",
+frame
+).CornerRadius=
+UDim.new(
+0,
+18
+)
 
 local stroke=
-Instance.new("UIStroke")
+Instance.new(
+"UIStroke"
+)
 
 stroke.Parent=frame
 stroke.Color=BORDER
 stroke.Thickness=2
 
-drag(frame)
 
---------------------------------------------------
+---
+
+-- SCROLL
+
+local scroll=
+Instance.new(
+"ScrollingFrame"
+)
+
+scroll.Parent=frame
+
+scroll.Size=
+UDim2.new(
+1,
+0,
+1,
+-25
+)
+
+scroll.Position=
+UDim2.new(
+0,
+0,
+0,
+25
+)
+
+scroll.BackgroundTransparency=1
+scroll.BorderSizePixel=0
+scroll.ScrollBarThickness=4
+
+scroll.CanvasSize=
+UDim2.new(
+0,
+0,
+0,
+360
+)
+
+
+---
+
+-- DRAG VIỀN
+
+local drag=false
+local start
+local pos
+
+frame.InputBegan:Connect(function(i)
+
+local p=i.Position  
+
+local edge=  
+
+p.X-frame.AbsolutePosition.X<18  
+or  
+
+frame.AbsolutePosition.X+  
+frame.AbsoluteSize.X-  
+p.X<18  
+
+or  
+
+p.Y-frame.AbsolutePosition.Y<18  
+or  
+
+frame.AbsolutePosition.Y+  
+frame.AbsoluteSize.Y-  
+p.Y<18  
+
+if edge and (  
+	i.UserInputType==  
+	Enum.UserInputType.Touch  
+	or  
+	i.UserInputType==  
+	Enum.UserInputType.MouseButton1  
+) then  
+
+	drag=true  
+
+	start=i.Position  
+	pos=frame.Position  
+
+end
+
+end)
+
+UIS.InputChanged:Connect(function(i)
+
+if drag and (  
+
+i.UserInputType==  
+Enum.UserInputType.Touch  
+
+or  
+
+i.UserInputType==  
+Enum.UserInputType.MouseMovement  
+
+) then  
+
+	local d=  
+	i.Position-start  
+
+	frame.Position=  
+	UDim2.new(  
+
+	pos.X.Scale,  
+	pos.X.Offset+d.X,  
+
+	pos.Y.Scale,  
+	pos.Y.Offset+d.Y  
+
+	)  
+
+end
+
+end)
+
+UIS.InputEnded:Connect(function()
+drag=false
+end)
+
+
+---
+
 -- TITLE
---------------------------------------------------
 
 local title=
-Instance.new("TextLabel")
+Instance.new(
+"TextLabel"
+)
 
 title.Parent=frame
-title.Size=UDim2.new(1,0,0,26)
 
-title.Position=UDim2.new(0,0,0,5)
+title.Size=
+UDim2.new(
+1,
+0,
+0,
+30
+)
 
 title.BackgroundTransparency=1
 
-title.Text="🍌 Banana Hub"
+title.Text=
+"🍌 Banana Hub"
 
 title.TextSize=18
 
 title.Font=
 Enum.Font.GothamBold
 
-title.TextColor3=
-Color3.new()
 
---------------------------------------------------
--- CREDIT
---------------------------------------------------
+---
 
-local credit=
-Instance.new("TextLabel")
-
-credit.Parent=frame
-
-credit.Size=
-UDim2.new(1,0,0,16)
-
-credit.Position=
-UDim2.new(0,0,1,-20)
-
-credit.BackgroundTransparency=1
-
-credit.Text="By n_g_u_y_e_n"
-
-credit.TextColor3=
-Color3.fromRGB(
-150,
-220,
-255
-)
-
-credit.TextSize=10
-
-credit.Font=
-Enum.Font.GothamBold
-
---------------------------------------------------
 -- BUTTON
---------------------------------------------------
 
 local function make(text,y)
 
-	local b=
-	Instance.new(
-	"TextButton"
-	)
+local b=  
+Instance.new(  
+"TextButton"  
+)  
 
-	b.Parent=frame
+b.Parent=scroll  
 
-	b.Size=
-	UDim2.new(
-	.8,
-	0,
-	0,
-	26
-	)
+b.Size=  
+UDim2.new(  
+.8,  
+0,  
+0,  
+30  
+)  
 
-	b.Position=
-	UDim2.new(
-	.1,
-	0,
-	0,
-	y
-	)
+b.Position=  
+UDim2.new(  
+.1,  
+0,  
+0,  
+y  
+)  
 
-	b.Text=text
+b.Text=text  
 
-	b.TextSize=12
+b.BackgroundTransparency=.25  
 
-	b.BackgroundColor3=
-	Color3.fromRGB(
-	240,
-	240,
-	240
-	)
+b.BackgroundColor3=  
+Color3.fromRGB(  
+240,  
+240,  
+240  
+)  
 
-	b.BackgroundTransparency=.25
+Instance.new(  
+"UICorner",  
+b  
+)  
 
-	Instance.new(
-	"UICorner",
-	b
-	).CornerRadius=
-	UDim.new(
-	0,
-	8
-	)
-
-	return b
+return b
 
 end
 
---------------------------------------------------
+
+---
+
 -- ESP
---------------------------------------------------
 
 local ESP=false
 
 local esp=
 make(
 "ESP : OFF",
-50
+15
 )
 
 local function updateESP()
 
-	for _,p in ipairs(
-	Players:GetPlayers()
-	) do
+for _,p in ipairs(  
+Players:GetPlayers()  
+) do  
 
-		if p~=Player and p.Character then
+	if p~=Player  
+	and p.Character then  
 
-			local old=
-			p.Character:FindFirstChild(
-			"BananaESP"
-			)
+		local old=  
+		p.Character:  
+		FindFirstChild(  
+		"BananaESP"  
+		)  
 
-			if old then
-				old:Destroy()
-			end
+		if old then  
+			old:Destroy()  
+		end  
 
-			if ESP then
+		if ESP then  
 
-				local h=
-				Instance.new(
-				"Highlight"
-				)
+			local h=  
+			Instance.new(  
+			"Highlight"  
+			)  
 
-				h.Name=
-				"BananaESP"
+			h.Name=  
+			"BananaESP"  
 
-				h.FillColor=
-				Color3.fromRGB(
-				0,
-				255,
-				120
-				)
+			h.FillColor=  
+			Color3.fromRGB(  
+			0,  
+			255,  
+			0  
+			)  
 
-				h.FillTransparency=.7
+			h.FillTransparency=.7  
 
-				h.OutlineColor=
-				Color3.fromRGB(
-				0,
-				255,
-				120
-				)
+			h.Parent=  
+			p.Character  
 
-				h.Parent=
-				p.Character
+		end  
 
-			end
+	end  
 
-		end
-
-	end
+end
 
 end
 
 esp.MouseButton1Click:Connect(function()
 
-	ESP=not ESP
+ESP=not ESP  
 
-	esp.Text=
-	ESP
-	and "ESP : ON"
-	or "ESP : OFF"
+esp.Text=  
+ESP and  
+"ESP : ON"  
+or  
+"ESP : OFF"  
 
-	updateESP()
+updateESP()
 
 end)
 
---------------------------------------------------
+
+---
+
 -- JUMP
---------------------------------------------------
 
 local inf=false
 
 local jump=
 make(
 "Jump : OFF",
-82
+60
 )
 
 jump.MouseButton1Click:Connect(function()
 
-	inf=not inf
+inf=not inf  
 
-	jump.Text=
-	inf
-	and "Jump : ON"
-	or "Jump : OFF"
+jump.Text=  
+inf and  
+"Jump : ON"  
+or  
+"Jump : OFF"
 
 end)
 
 UIS.JumpRequest:Connect(function()
 
-	if inf then
+if inf then  
 
-		local h=
-		Player.Character
-		and
-		Player.Character:FindFirstChildOfClass(
-		"Humanoid"
-		)
+	local h=  
+	Player.Character  
+	and  
+	Player.Character:  
+	FindFirstChildOfClass(  
+	"Humanoid"  
+	)  
 
-		if h then
+	if h then  
 
-			h:ChangeState(
-			Enum.HumanoidStateType.Jumping
-			)
+		h:ChangeState(  
+		Enum.HumanoidStateType.Jumping  
+		)  
 
-		end
+	end  
 
-	end
+end
 
 end)
 
---------------------------------------------------
+
+---
+
 -- SPEED
---------------------------------------------------
 
 local speed=16
 local speedOn=false
@@ -341,60 +417,58 @@ local speedOn=false
 local speedBtn=
 make(
 "Speed : OFF",
-114
+105
 )
 
-local function applySpeed()
+local function apply()
 
-	local h=
-	Player.Character
-	and
-	Player.Character:FindFirstChildOfClass(
-	"Humanoid"
-	)
+local h=  
+Player.Character  
+and  
+Player.Character:  
+FindFirstChildOfClass(  
+"Humanoid"  
+)  
 
-	if h then
+if h then  
 
-		h.WalkSpeed=
-		speedOn
-		and speed
-		or 16
+	h.WalkSpeed=  
+	speedOn  
+	and speed  
+	or 16  
 
-	end
+end
 
 end
 
 speedBtn.MouseButton1Click:Connect(function()
 
-	speedOn=
-	not speedOn
+speedOn=  
+not speedOn  
 
-	speedBtn.Text=
-	speedOn
-	and "Speed : ON"
-	or "Speed : OFF"
+speedBtn.Text=  
+speedOn and  
+"Speed : ON"  
+or  
+"Speed : OFF"  
 
-	applySpeed()
+apply()
 
 end)
-
---------------------------------------------------
--- BOX
---------------------------------------------------
 
 local box=
 Instance.new(
 "TextBox"
 )
 
-box.Parent=frame
+box.Parent=scroll
 
 box.Size=
 UDim2.new(
 .8,
 0,
 0,
-26
+30
 )
 
 box.Position=
@@ -402,12 +476,10 @@ UDim2.new(
 .1,
 0,
 0,
-146
+150
 )
 
 box.Text="16"
-
-box.TextSize=12
 
 Instance.new(
 "UICorner",
@@ -416,65 +488,285 @@ box
 
 box.FocusLost:Connect(function()
 
-	local n=
-	tonumber(
-	box.Text
-	)
+local n=  
+tonumber(  
+box.Text  
+)  
 
-	if n then
+if n then  
 
-		speed=n
+	speed=n  
 
-		applySpeed()
+	apply()  
 
-	end
+end
 
 end)
 
---------------------------------------------------
--- + -
---------------------------------------------------
-
 local plus=
-make("+",182)
+make("+",195)
 
 plus.Size=
-UDim2.new(.35,0,0,26)
+UDim2.new(
+.35,
+0,
+0,
+30
+)
 
 plus.MouseButton1Click:Connect(function()
 
-	speed+=5
-	box.Text=speed
-	applySpeed()
+speed+=5  
+
+box.Text=speed  
+
+apply()
 
 end)
 
 local minus=
-make("-",182)
+make("-",195)
 
 minus.Size=
-UDim2.new(.35,0,0,26)
+UDim2.new(
+.35,
+0,
+0,
+30
+)
 
 minus.Position=
-UDim2.new(.55,0,0,182)
+UDim2.new(
+.55,
+0,
+0,
+195
+)
 
 minus.MouseButton1Click:Connect(function()
 
-	speed=
-math.max(
-0,
-speed-5
-)
+speed=  
+math.max(  
+0,  
+speed-5  
+)  
 
-	box.Text=speed
+box.Text=speed  
 
-	applySpeed()
+apply()
 
 end)
 
---------------------------------------------------
+
+---
+
+-- AIM
+
+local aim=false
+local target=nil
+local FOV=150
+
+local aimBtn=
+make(
+"Aimbot : OFF",
+245
+)
+
+local circle=
+Instance.new(
+"Frame"
+)
+
+circle.Parent=gui
+
+circle.Size=
+UDim2.new(
+0,
+FOV2,
+0,
+FOV2
+)
+
+circle.AnchorPoint=
+Vector2.new(
+.5,
+.5
+)
+
+circle.Position=
+UDim2.new(
+.5,
+0,
+.5,
+0
+)
+
+circle.BackgroundTransparency=1
+circle.Visible=false
+
+local fs=
+Instance.new(
+"UIStroke"
+)
+
+fs.Parent=circle
+fs.Color=BORDER
+
+Instance.new(
+"UICorner",
+circle
+).CornerRadius=
+UDim.new(
+1,
+0
+)
+
+local function alive(p)
+
+local c=  
+p and p.Character  
+
+local h=  
+c and  
+c:FindFirstChild(  
+"Humanoid"  
+)  
+
+return h  
+and  
+h.Health>0  
+and  
+c:FindFirstChild(  
+"Head"  
+)
+
+end
+
+local function find()
+
+local center=  
+Vector2.new(  
+
+Camera.ViewportSize.X/2,  
+
+Camera.ViewportSize.Y/2  
+
+)  
+
+local best  
+local dist=FOV  
+
+for _,p in ipairs(  
+Players:GetPlayers()  
+) do  
+
+	if  
+
+	p~=Player  
+
+	and  
+
+	alive(p)  
+
+	then  
+
+		local pos,on=  
+		Camera:  
+		WorldToViewportPoint(  
+
+		p.Character.Head.Position  
+
+		)  
+
+		if on then  
+
+			local d=  
+
+			(  
+			Vector2.new(  
+			pos.X,  
+			pos.Y  
+			)  
+
+			-  
+			center  
+
+			).Magnitude  
+
+			if d<dist then  
+
+				best=p  
+				dist=d  
+
+			end  
+
+		end  
+
+	end  
+
+end  
+
+return best
+
+end
+
+aimBtn.MouseButton1Click:Connect(function()
+
+aim=  
+not aim  
+
+circle.Visible=  
+aim  
+
+aimBtn.Text=  
+aim and  
+"Aimbot : ON"  
+or  
+"Aimbot : OFF"
+
+end)
+
+RunService.RenderStepped:Connect(function()
+
+if not aim then  
+	return  
+end  
+
+if  
+not target  
+or  
+not alive(  
+target  
+)  
+
+then  
+
+	target=  
+	find()  
+
+end  
+
+if target then  
+
+	Camera.CFrame=  
+	CFrame.lookAt(  
+
+	Camera.CFrame.Position,  
+
+	target.Character  
+	.Head  
+	.Position  
+
+	)  
+
+end
+
+end)
+
+
+---
+
 -- MENU BUTTON
---------------------------------------------------
 
 local menu=
 Instance.new(
@@ -499,32 +791,11 @@ UDim2.new(
 -21
 )
 
-menu.BackgroundColor3=
-Color3.fromRGB(
-255,
-255,
-255
-)
-
-menu.BackgroundTransparency=.15
-
 menu.Text="🍌"
-
-menu.TextSize=18
-
-menu.Font=
-Enum.Font.GothamBold
-
-menu.TextColor3=
-Color3.new()
 
 Instance.new(
 "UICorner",
 menu
-).CornerRadius=
-UDim.new(
-0,
-12
 )
 
 local ms=
@@ -534,34 +805,12 @@ Instance.new(
 
 ms.Parent=menu
 
-ms.Color=
-Color3.fromRGB(
-57,
-255,
-20
-)
-
+ms.Color=BORDER
 ms.Thickness=3
-
-drag(menu)
 
 menu.MouseButton1Click:Connect(function()
 
-	frame.Visible=
-	not frame.Visible
-
-end)
-
---------------------------------------------------
--- RESPAWN
---------------------------------------------------
-
-Player.CharacterAdded:Connect(function()
-
-	task.wait(1)
-
-	applySpeed()
-
-	updateESP()
+frame.Visible=  
+not frame.Visible
 
 end)
