@@ -141,7 +141,7 @@ end
 ---
 -- CHỨC NĂNG ESP BOX 2D
 local ESP = false
-local esp = make("ESP : OFF", 0.5)
+local esp = make("ESP : OFF", 1)
 
 local function updateESP()
     for _, p in ipairs(Players:GetPlayers()) do
@@ -154,7 +154,7 @@ local function updateESP()
                     local bGui = Instance.new("BillboardGui")
                     bGui.Name = "BananaESP_Box"
                     bGui.AlwaysOnTop = true
-                    bGui.Size = UDim2.new(4.5, 0, 6, 0)
+                    bGui.Size = UDim2.new(2.25, 0, 3, 0)
                     bGui.Adornee = root
                     bGui.Parent = p.Character
                     
