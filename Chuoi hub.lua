@@ -141,7 +141,7 @@ end
 ---
 -- CHỨC NĂNG ESP BOX 2D
 local ESP = false
-local esp = make("ESP : OFF", 1)
+local esp = make("ESP : OFF", 0.5)
 
 local function updateESP()
     for _, p in ipairs(Players:GetPlayers()) do
