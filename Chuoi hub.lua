@@ -139,9 +139,9 @@ local function make(text, order)
 end
 
 ---
--- CHỨC NĂNG ESP BOX 2D
+-- CHỨC NĂNG ESP BOX 2D (ÔM SÁT TAY CHÂN + VIỀN MỎNG MỘT NỬA)
 local ESP = false
-local esp = make("ESP : OFF", 1)
+local esp = make("ESP : OFF", 0.5)
 
 local function updateESP()
     for _, p in ipairs(Players:GetPlayers()) do
@@ -154,7 +154,8 @@ local function updateESP()
                     local bGui = Instance.new("BillboardGui")
                     bGui.Name = "BananaESP_Box"
                     bGui.AlwaysOnTop = true
-                    bGui.Size = UDim2.new(2.25, 0, 3, 0)
+                    -- Tỉ lệ chuẩn ôm vừa khít toàn thân (tay và chân) nhân vật Roblox
+                    bGui.Size = UDim2.new(4.1, 0, 5.8, 0)
                     bGui.Adornee = root
                     bGui.Parent = p.Character
                     
@@ -166,7 +167,8 @@ local function updateESP()
                     local boxStroke = Instance.new("UIStroke")
                     boxStroke.Name = "BoxStroke"
                     boxStroke.Color = Color3.fromRGB(0, 255, 0)
-                    boxStroke.Thickness = 2
+                    -- SỬA TẠI ĐÂY: Giảm độ dày viền xuống 1 (mỏng đi một nửa so với mức 2 cũ) giúp nét vẽ tinh tế hơn
+                    boxStroke.Thickness = 1
                     boxStroke.Parent = boxFrame
                 end
             else
